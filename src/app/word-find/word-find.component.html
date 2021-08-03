@@ -1,1 +1,7 @@
-<p>word-find works!</p>
+<div id="round-number">Round No. {{ roundNumber }}</div>
+<div id="word-to-guess">
+    <div id="check-letter" *ngFor="let letter of wordToGuess">
+        <div id="letter" *ngIf="show === true">{{ letter }}</div>
+        <div id="bottom-border"></div>
+    </div>
+</div>

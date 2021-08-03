@@ -1,0 +1,27 @@
+#round-number
+{
+    float: right;
+    margin-top: 2%;
+}
+
+#word-to-guess
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#check-letter
+{
+    width: 7%;
+}
+
+#bottom-border
+{
+    border-bottom: 2px solid white;
+}
+
+#letter
+{
+    font-size: 300%;
+}

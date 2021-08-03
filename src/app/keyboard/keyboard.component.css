@@ -1,0 +1,21 @@
+#keyboard
+{
+    position: static;
+    width: 50%;
+    margin: 10% auto auto auto;
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#keyboard-button
+{
+    width: 8%;
+    height: 30%;
+    align-items: space-around;
+    background-color: #262E38;
+    color: white;
+    border: 1px solid #596574;
+}

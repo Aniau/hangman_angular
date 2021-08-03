@@ -1,125 +1,121 @@
-{
-    "Words":
-    [
-        {
+[{
             "id": 1,
-            "word": ""
+            "word": "parasol"
         },
         {
             "id": 2,
-            "word": ""
+            "word": "bogracz"
         },
         {
             "id": 3,
-            "word": ""
+            "word": "inteligencja"
         },
         {
             "id": 4,
-            "word": ""
+            "word": "reklama"
         },
         {
             "id": 5,
-            "word": ""
+            "word": "wiosna"
         },
         {
             "id": 6,
-            "word": ""
+            "word": "ropucha"
         },
         {
             "id": 7,
-            "word": ""
+            "word": "drzwi"
         },
         {
             "id": 8,
-            "word": ""
+            "word": "pogoda"
         },
         {
             "id": 9,
-            "word": ""
+            "word": "deszcz"
         },
         {
             "id": 10,
-            "word": ""
+            "word": "rarytas"
         },
         {
             "id": 11,
-            "word": ""
+            "word": "marzenie"
         },
         {
             "id": 12,
-            "word": ""
+            "word": "programowanie"
         },
         {
             "id": 13,
-            "word": ""
+            "word": "angular"
         },
         {
             "id": 14,
-            "word": ""
+            "word": "typescript"
         },
         {
             "id": 15,
-            "word": ""
+            "word": "obserwator"
         },
         {
             "id": 16,
-            "word": ""
+            "word": "biblioteka"
         },
         {
             "id": 17,
-            "word": ""
+            "word": "patio"
         },
         {
             "id": 18,
-            "word": ""
+            "word": "stolik"
         },
         {
             "id": 19,
-            "word": ""
+            "word": "herbata"
         },
         {
             "id": 20,
-            "word": ""
+            "word": "monitor"
         },
         {
             "id": 21,
-            "word": ""
+            "word": "komputer"
         },
         {
             "id": 22,
-            "word": ""
+            "word": "kieliszek"
         },
         {
             "id": 23,
-            "word": ""
+            "word": "klawiatura"
         },
         {
             "id": 24,
-            "word": ""
+            "word": "torebka"
         },
         {
             "id": 25,
-            "word": ""
+            "word": "komoda"
         },
         {
             "id": 26,
-            "word": ""
+            "word": "kanapa"
         },
         {
             "id": 27,
-            "word": ""
+            "word": "zmienna"
         },
         {
             "id": 28,
-            "word": ""
+            "word": "funkcja"
         },
         {
             "id": 29,
-            "word": ""
+            "word": "internet"
         },
         {
             "id": 30,
-            "word": ""
+            "word": "problem"
         }
     ]
-}

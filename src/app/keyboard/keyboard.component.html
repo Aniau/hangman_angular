@@ -1,1 +1,3 @@
-<p>keyboard works!</p>
+<div id="keyboard">
+    <button id="keyboard-button" mat-raised-button color="accent" *ngFor="let i of keyboard" value="{{i}}" (click)="onKeyUp($event)">{{ i }}</button>
+</div>
