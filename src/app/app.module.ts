@@ -8,22 +8,26 @@ import { AppRoutingModule } from './app-routing.module';
 import { KeyboardComponent } from './keyboard/keyboard.component';
 import { HangmanComponent } from './hangman/hangman.component';
 import { WordFindComponent } from './word-find/word-find.component';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { DialogComponent } from './word-find/dialog/dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     KeyboardComponent,
     HangmanComponent,
-    WordFindComponent
+    WordFindComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
     MatButtonModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule
   ],
-  providers: [],
+  providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
