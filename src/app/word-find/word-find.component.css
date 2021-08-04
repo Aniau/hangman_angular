@@ -1,19 +1,20 @@
 #round-number
 {
-    float: right;
-    margin-top: 2%;
+    margin: 2% auto auto auto;
 }
 
 #word-to-guess
 {
+    margin: 50% auto auto auto;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 #check-letter
 {
-    width: 7%;
+    width: 50px;
+    padding: 3%;
 }
 
 #bottom-border
