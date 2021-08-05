@@ -18,6 +18,8 @@
     align-items: space-around;
     background-color: #262E38;
     color: white;
+    font-weight: 100;
+    font-size: 150%;
     border: 1px solid #596574;
 }
 

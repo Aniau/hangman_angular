@@ -4,6 +4,7 @@ import { words } from '../model/answer';
 import { MatDialog } from '@angular/material/dialog';
 import { WordService } from '../service/word.service';
 import { DialogComponent } from '../word-find/dialog/dialog.component';
+import { GetUserLoginService } from '../service/get-user-login.service';
 
 @Component({
   selector: 'app-word-find',
@@ -23,15 +24,28 @@ export class WordFindComponent implements OnInit {
   public findMultipleLetters: Array<string> = []; 
   public roundNumber: number = 1;
   public show = false;
+  public userLogin: string = '';
+  public score: number = 0;
   // @ViewChild('callAPIDialog') callAPIDialog: TemplateRef<any>;
 
-  constructor(private apiService: ApiConnectService, private wordSevice: WordService, public dialog: MatDialog) 
+  constructor(private apiService: ApiConnectService, private wordSevice: WordService, private getUserLogin: GetUserLoginService, public dialog: MatDialog) 
   { 
   }
   
   ngOnInit() {
     this.getWord();
     this.checkWord();
+    this.getUserLogin.getUserLogin().subscribe(
+      result => 
+      {
+        console.log(result);
+        this.userLogin = result;
+      },
+      error => 
+      {
+        console.log(error);
+      }
+    )
   }
   
   getWord(): void
@@ -118,7 +132,7 @@ export class WordFindComponent implements OnInit {
                 {
                   width: '400px',
                   height: '400px',
-                  hasBackdrop: false,
+                  hasBackdrop: true,
                   panelClass: 'dialog'
                 });
   

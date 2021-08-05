@@ -1,6 +1,20 @@
 #round-number
 {
     margin: 2% auto auto auto;
+    font-size: 400%;
+    color: white;
+}
+
+#user-login
+{
+    color: white;
+    margin-top: 5%;
+}
+
+#score
+{
+    color: white;
+    
 }
 
 #word-to-guess
@@ -26,8 +40,9 @@
 
 .letter
 {
-    /* font-size: 20%; */
-    /* vertical-align: middle; */
+    font-size: 300%;
+    margin: 0% 25% 15% 25%;
+    vertical-align: middle;
 }
 
 .showLetter

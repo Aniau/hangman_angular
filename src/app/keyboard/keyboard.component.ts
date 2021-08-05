@@ -17,6 +17,7 @@ export class KeyboardComponent implements OnInit {
   ngOnInit()
   {
     this.keyboard = this.qwerty.split('');
+    console.log(this.keyboard);
     this.wordSevice.getErrors().subscribe(
       (result: number[]) => {
         console.log(result);
@@ -27,12 +28,12 @@ export class KeyboardComponent implements OnInit {
       );
   }
 
-  onKeyUp(e: any)
+  onKeyUp(letter: string)
   {
-    console.log(e.target.value);  
+    console.log(letter);    
     this.isClicked = true;
     console.log(this.isClicked);
-    this.wordSevice.sendLeterToCheck(e.target.value);
+    this.wordSevice.sendLeterToCheck(letter);
   }
 
 }

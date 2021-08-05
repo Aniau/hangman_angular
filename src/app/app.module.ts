@@ -10,6 +10,9 @@ import { HangmanComponent } from './hangman/hangman.component';
 import { WordFindComponent } from './word-find/word-find.component';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { DialogComponent } from './word-find/dialog/dialog.component';
+import { UserComponent } from './user/user.component';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,8 @@ import { DialogComponent } from './word-find/dialog/dialog.component';
     KeyboardComponent,
     HangmanComponent,
     WordFindComponent,
-    DialogComponent
+    DialogComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +29,10 @@ import { DialogComponent } from './word-find/dialog/dialog.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
   bootstrap: [AppComponent]
