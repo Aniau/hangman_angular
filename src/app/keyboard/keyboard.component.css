@@ -20,3 +20,9 @@
     color: white;
     border: 1px solid #596574;
 }
+
+.isClicked
+{
+    background-color: #596574;
+    border: 1px solid #262E38;
+}

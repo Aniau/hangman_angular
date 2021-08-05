@@ -25,14 +25,16 @@ export class WordFindComponent implements OnInit {
   public show = false;
   // @ViewChild('callAPIDialog') callAPIDialog: TemplateRef<any>;
 
-  constructor(private apiService: ApiConnectService, private wordSevice: WordService, public dialog: MatDialog) { }
-
+  constructor(private apiService: ApiConnectService, private wordSevice: WordService, public dialog: MatDialog) 
+  { 
+  }
+  
   ngOnInit() {
     this.getWord();
     this.checkWord();
   }
   
-  getWord()
+  getWord(): void
   {
     this.roundWord = this.getRandom();
     this.apiService.getWords().subscribe(
@@ -71,63 +73,71 @@ export class WordFindComponent implements OnInit {
       return this.roundWord;
   }
 
-  checkWord()
+  checkWord(): void
   {
     this.wordSevice.getLetterToCheck().subscribe(
       (letter: string) => {
-          console.log(letter);
-          this.letterToCheck = letter;
-          if(this.wordToGuess.includes(letter) === true)
+          console.log(typeof letter);
+          console.log();
+          if(letter !== '')
           {
-            console.log('yes');
-            this.findMultipleLetters = this.wordToGuess.filter(x => x.includes(letter));
-
-            for(let item of this.findMultipleLetters)
+            this.letterToCheck = letter;
+            if(this.wordToGuess.includes(letter) === true)
             {
-              this.correctLetters.push(item);
+              console.log('yes');
+              this.findMultipleLetters = this.wordToGuess.filter(x => x.includes(letter));
+  
+              for(let item of this.findMultipleLetters)
+              {
+                this.correctLetters.push(item);
+              }
+              console.log(this.correctLetters);
+              this.show = true;
+  
+              if(this.correctLetters.length === this.wordToGuess.length)
+              {
+                console.log('new round');
+                this.wordToGuess = [];
+                this.errorCheck = [];
+                this.correctLetters = [];
+                this.getWord();
+                this.checkWord();
+                this.roundNumber = this.roundNumber+1;
+              }
             }
-            console.log(this.correctLetters);
-            this.show = true;
-
-            if(this.correctLetters.length === this.wordToGuess.length)
+            else if(this.letterToCheck !== 'undefined')
+            {
+              console.log('false');
+              this.show = false;
+              this.errorCheck.push(1);
+              console.log(this.errorCheck);
+              this.wordSevice.sendErrorValues(this.errorCheck);
+              if(this.errorCheck.length === 6 && this.correctLetters.length !== this.wordToGuess.length)
+              {
+                const dialogRef = this.dialog.open(DialogComponent,
+                {
+                  width: '400px',
+                  height: '400px',
+                  hasBackdrop: false,
+                  panelClass: 'dialog'
+                });
+  
+                dialogRef.afterClosed().subscribe(result => 
+                {
+                    window.location.reload();
+                });
+              }
+            }
+            else if(this.correctLetters.length === this.wordToGuess.length)
             {
               console.log('new round');
-              this.wordToGuess = [];
-              this.errorCheck = [];
-              this.correctLetters = [];
-              this.getWord();
-              this.checkWord();
               this.roundNumber = this.roundNumber+1;
             }
           }
-          else if(this.letterToCheck !== 'undefined')
+          else
           {
-            console.log('false');
-            this.show = false;
-            this.errorCheck.push(1);
-            console.log(this.errorCheck);
+            this.errorCheck = [];
             this.wordSevice.sendErrorValues(this.errorCheck);
-            if(this.errorCheck.length === 6 && this.correctLetters.length !== this.wordToGuess.length)
-            {
-              // alert('koniec gry!');
-              const dialogRef = this.dialog.open(DialogComponent,
-              {
-                width: '400px',
-                height: '400px',
-                hasBackdrop: false,
-                panelClass: 'dialog'
-              });
-
-              dialogRef.afterClosed().subscribe(result => 
-              {
-                  window.location.reload();
-              });
-            }
-          }
-          else if(this.correctLetters.length === this.wordToGuess.length)
-          {
-            console.log('new round');
-            this.roundNumber = this.roundNumber+1;
           }
       },
       error => 

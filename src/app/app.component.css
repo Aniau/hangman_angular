@@ -1,0 +1,14 @@
+#flex-item-hangman
+{
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 40%;
+    align-items: center; 
+}
+#flex-item-word
+{
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 60%;
+    align-items: center; 
+}

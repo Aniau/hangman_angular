@@ -1,6 +1,13 @@
-.mat-dialog-container
+::ng-deep .mat-dialog-container
 {
     background-color: #262E38;
+}
+
+svg
+{
+    margin-left: 22%;
+    width: 78%;
+    height: 10%;
 }
 
 #dialog
@@ -25,7 +32,8 @@
 
 .play
 {
-    margin-top: 60%;
+    margin-top: 15%;
+    color: white;
 }
 
 #flex
@@ -41,4 +49,94 @@
     color: white;
     border: 1px solid #596574;
     /* margin: 15% auto 5% auto; */
+}
+
+svg #head
+{
+    animation: hangman 3s ease alternate infinite;
+    animation-delay: 0.1s;
+}
+
+svg #left-left-eye, svg #right-left-eye
+{
+    animation: hangman 3s ease alternate infinite;
+    animation-delay: 0.2s;
+}
+
+svg #right-right-eye, svg #left-right-eye
+{
+    animation: hangman 3s ease alternate infinite;
+    animation-delay: 0.3s;
+}
+
+
+svg #reverse-smile
+{
+    animation: hangman 3s ease alternate infinite;
+    animation-delay: 0.3s;
+}
+
+@keyframes hangman
+{
+    0%
+    {
+        opacity: 1;
+    }
+    10%
+    {
+        opacity: 0;
+    }
+    30%
+    {
+        opacity: 1;
+    }
+    35%
+    {
+        opacity: 10.5;
+    }
+    40%
+    {
+        opacity: 1;
+    }
+    90%
+    {
+        opacity: 0.8;
+    }
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+
+@keyframes smile
+{
+    0%
+    {
+        opacity: 1;
+    }
+    10%
+    {
+        opacity: 0;
+    }
+    30%
+    {
+        opacity: 1;
+    }
+    35%
+    {
+        opacity: 10.5;
+    }
+    40%
+    {
+        opacity: 1;
+    }
+    90%
+    {
+        opacity: 0.8;
+    }
+    100%
+    {
+        opacity: 1;
+    }
 }

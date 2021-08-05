@@ -1,4 +1,3 @@
-import { ConstantPool } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { WordService } from '../service/word.service';
 
@@ -10,6 +9,8 @@ import { WordService } from '../service/word.service';
 export class KeyboardComponent implements OnInit {
   public qwerty: string = 'qwertyuiopasdfghjklzxcvbnm';
   public keyboard: Array<string> = [];
+  public isClicked = false;
+
   constructor(private wordSevice: WordService) { }
 
 
@@ -29,6 +30,8 @@ export class KeyboardComponent implements OnInit {
   onKeyUp(e: any)
   {
     console.log(e.target.value);  
+    this.isClicked = true;
+    console.log(this.isClicked);
     this.wordSevice.sendLeterToCheck(e.target.value);
   }
 

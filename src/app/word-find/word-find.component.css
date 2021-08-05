@@ -5,16 +5,17 @@
 
 #word-to-guess
 {
-    margin: 50% auto auto auto;
+    /* margin: 50% auto auto auto; */
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    padding-top: 20%;
+    justify-content:center;
 }
 
 .check-letter
 {
     width: 50px;
-    padding: 3%;
+    padding: 10px;
 }
 
 .bottom-border
@@ -25,8 +26,8 @@
 
 .letter
 {
-    font-size: 300%;
-    vertical-align: middle;
+    /* font-size: 20%; */
+    /* vertical-align: middle; */
 }
 
 .showLetter

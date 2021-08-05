@@ -1,34 +1,15 @@
 svg
 {
     position: sticky;
+    padding-left: 10%;
 }
 
-svg #head
+.hide
 {
-    animation: hangman 3s ease alternate infinite;
-    animation-delay: 0.1s;
+    visibility: hidden;
 }
 
-svg #left-left-eye, svg #right-left-eye
+.show
 {
-    animation: hangman 3s ease alternate infinite;
-    animation-delay: 0.2s;
-}
-
-svg #right-right-eye, svg #left-right-eye
-{
-    animation: hangman 3s ease alternate infinite;
-    animation-delay: 0.3s;
-}
-
-@keyframes hangman
-{
-    50%
-    {
-        opacity: 0.6;
-    }
-    100%
-    {
-        opacity: 1;
-    }
+    visibility: visible;
 }
