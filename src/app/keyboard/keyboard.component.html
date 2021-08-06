@@ -1,5 +1,5 @@
 <div id="keyboard" >
-    <button id="keyboard-button" mat-raised-button color="accent" *ngFor="let i of keyboard" value="{{i}}" [ngClass]="{'isClicked' : isClicked}" 
+    <button id="keyboard-button" mat-raised-button color="accent" *ngFor="let i of keyboard" value="{{i}}" 
+    [ngClass]="isClicked ? 'isClicked' : ''" 
      (click)="onKeyUp(i)">{{ i }}</button>
 </div>
-<router-outlet></router-outlet>

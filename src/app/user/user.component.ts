@@ -19,6 +19,7 @@ export class UserComponent implements OnInit {
 
   sendLogin(login: string)
   {
+
     this.getUserLogin.sendUserLogin(login);
     // this.router.navigate(['hangman']);
   }
