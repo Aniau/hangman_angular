@@ -5,14 +5,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
-import { KeyboardComponent } from './keyboard/keyboard.component';
-import { HangmanComponent } from './hangman/hangman.component';
-import { WordFindComponent } from './word-find/word-find.component';
+import { KeyboardComponent } from './main-game/keyboard/keyboard.component';
+import { HangmanComponent } from './main-game/hangman/hangman.component';
+import { WordFindComponent } from './main-game/word-find/word-find.component';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
-import { DialogComponent } from './word-find/dialog/dialog.component';
+import { DialogComponent } from './main-game/word-find/dialog/dialog.component';
 import { UserComponent } from './user/user.component';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { MainGameComponent } from './main-game/main-game.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     HangmanComponent,
     WordFindComponent,
     DialogComponent,
-    UserComponent
+    UserComponent,
+    MainGameComponent
   ],
   imports: [
     BrowserModule,

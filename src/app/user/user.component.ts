@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GetUserLoginService } from '../service/get-user-login.service';
 
@@ -21,6 +20,6 @@ export class UserComponent implements OnInit {
   {
 
     this.getUserLogin.sendUserLogin(login);
-    // this.router.navigate(['hangman']);
+    this.router.navigate(['main-game']);
   }
 }

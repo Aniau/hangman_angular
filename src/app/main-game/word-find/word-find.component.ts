@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiConnectService } from '../service/api-connect.service';
-import { words } from '../model/answer';
+import { ApiConnectService } from '../../service/api-connect.service';
+import { words } from '../../model/answer';
 import { MatDialog } from '@angular/material/dialog';
-import { WordService } from '../service/word.service';
+import { WordService } from '../../service/word.service';
 import { DialogComponent } from '../word-find/dialog/dialog.component';
-import { GetUserLoginService } from '../service/get-user-login.service';
+import { GetUserLoginService } from '../../service/get-user-login.service';
 
 @Component({
   selector: 'app-word-find',
@@ -20,7 +20,7 @@ export class WordFindComponent implements OnInit {
   public wordToGuess: Array<string> = [];
   public letterToCheck: string = '';
   public errorCheck: Array<number> = [];
-  public correctLetters: Array<string> = [];
+  public correctLetters: string[][] = [[],[]];
   public findMultipleLetters: Array<string> = []; 
   public roundNumber: number = 1;
   public show = false;
@@ -101,9 +101,9 @@ export class WordFindComponent implements OnInit {
               console.log('yes');
               this.findMultipleLetters = this.wordToGuess.filter(x => x.includes(letter));
   
-              for(let item of this.findMultipleLetters)
+              for(let x of this.findMultipleLetters)
               {
-                this.correctLetters.push(item);
+                this.correctLetters.push([x]);
               }
               console.log(this.correctLetters);
               this.show = true;

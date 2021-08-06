@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WordService } from '../service/word.service';
+import { WordService } from '../../service/word.service';
 
 @Component({
   selector: 'app-hangman',
