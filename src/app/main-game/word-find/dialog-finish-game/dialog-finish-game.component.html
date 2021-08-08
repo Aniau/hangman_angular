@@ -1,10 +1,12 @@
 <div id="dialog">
     <p class="center" id="game-over">YOU WIN !</p>
-    <img src="assets/trophy.svg" id="trophy-img" alt="Kiwi standing on oval">
+    <div class="relative">
+        <img src="assets/trophy.svg" id="trophy-img" alt="Kiwi standing on oval">
+        <div *ngFor="let i of [].constructor(36)" id="dot-absolute">.</div>
+    </div>
     <p class="center play">Play again ?</p>
     <div id="flex">
-        <button id="no" mat-raised-button mat-button>NO</button>
-        <button id="button" mat-raised-button mat-button cdkFocusInitial [mat-dialog-close]="true" >YES</button>
+        <button id="button" mat-raised-button mat-button cdkFocusInitial [mat-dialog-close]="true" (click)="runNewGame();">RUN AGAIN</button>
     </div>
 </div>
 

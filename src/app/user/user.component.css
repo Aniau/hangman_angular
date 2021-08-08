@@ -3,7 +3,7 @@
     display: flex;
     width: 30%;
     flex-direction: column;
-    margin: 30% auto auto auto;
+    margin: 20% auto auto auto;
 }
 
 #login-button
@@ -11,7 +11,7 @@
     width: 20%;
     margin: auto;
     background-color: transparent;
-    border: 1px solid white;
+    border: 1px solid #596574;
     color: white;
 }
 
@@ -30,4 +30,20 @@
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline
 {
     background-color: white;
+}
+
+.disabled
+{
+    border: 1px solid #596574;
+    color:#596574;
+    color: #596574;
+}
+
+.not-disabled
+{
+    width: 20%;
+    margin: auto;
+    background-color: transparent;
+    border: 1px solid #596574;
+    color: white;
 }

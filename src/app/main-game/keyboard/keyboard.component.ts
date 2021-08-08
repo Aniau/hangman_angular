@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { WordService } from '../../service/word.service';
+import { KeyShow } from '../../model/KeyShow'
 
 @Component({
   selector: 'app-keyboard',
@@ -8,33 +9,65 @@ import { WordService } from '../../service/word.service';
 })
 export class KeyboardComponent implements OnInit {
   public qwerty: string = 'qwertyuiopasdfghjklzxcvbnm';
-  public keyboard: Array<string> = [];
-  public isClicked = false;
-
+  public keyboard: KeyShow[] = [];
+  private audioCorrect = new Audio('http://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/alien_shoot.wav');
+  private audioFail = new Audio('https://rpg.hamsterrepublic.com/wiki-images/7/72/Metal_Hit.ogg');
+  
   constructor(private wordSevice: WordService) { }
 
 
   ngOnInit()
   {
-    this.keyboard = this.qwerty.split('');
-    console.log(this.keyboard);
-    this.wordSevice.getErrors().subscribe(
-      (result: number[]) => {
-        console.log(result);
-        console.log(result);
+    let keySplitted = this.qwerty.split('');
+    for(let key of keySplitted)
+    {
+      let keys = new KeyShow(key, false);
+      this.keyboard.push(keys);
+    }
+
+    this.wordSevice.getInfoNewRound().subscribe(
+      result => 
+      {
+        if(result === 1)
+        {
+          for(let key of this.keyboard)
+          {
+              key.show = false;
+          }
+        }
       },
-      error => {
+      error => 
+      {
         console.log(error);
       }
-      );
+    )
   }
 
   onKeyUp(letter: string)
   {
-    console.log(letter);    
-    this.isClicked = true;
-    console.log(this.isClicked);
-    this.wordSevice.sendLeterToCheck(letter);
+    for(let key of this.keyboard)
+    {
+      if(key.letter === letter)
+      {
+        key.show = true;
+        this.audioCorrect.play();
+      }
+      else
+      {
+        this.audioFail.play();
+      }
+    }    
+    this.wordSevice.sendLetterToCheck(letter);
+  }
+
+  playCorrect()
+  {
+    this.audioCorrect.play();
+  }
+
+  playFailed()
+  {
+    this.audioFail.play();
   }
 
 }

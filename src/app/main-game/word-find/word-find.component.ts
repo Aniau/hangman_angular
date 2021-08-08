@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiConnectService } from '../../service/api-connect.service';
 import { words } from '../../model/answer';
-import { LetterShow } from '../../model/letterShow';
+import { LetterShow } from '../../model/letterShow'
 import { MatDialog } from '@angular/material/dialog';
 import { WordService } from '../../service/word.service';
 import { DialogComponent } from '../word-find/dialog/dialog.component';
 import { GetUserLoginService } from '../../service/get-user-login.service';
 import { DialogFinishGameComponent } from './dialog-finish-game/dialog-finish-game.component';
+import { Router } from '@angular/router';
+
+export interface DialogData {
+  score: number;
+  login: string;
+}
 
 @Component({
   selector: 'app-word-find',
@@ -29,9 +35,9 @@ export class WordFindComponent implements OnInit {
   public show = false;
   public userLogin: string = '';
   public score: number = 0;
-  // @ViewChild('callAPIDialog') callAPIDialog: TemplateRef<any>;
 
-  constructor(private apiService: ApiConnectService, private wordSevice: WordService, private getUserLogin: GetUserLoginService, public dialog: MatDialog) 
+  constructor(private apiService: ApiConnectService, private wordSevice: WordService, private getUserLogin: GetUserLoginService, public dialog: MatDialog,
+              private router: Router) 
   { 
   }
   
@@ -46,14 +52,13 @@ export class WordFindComponent implements OnInit {
     this.getUserLogin.getUserLogin().subscribe(
       result => 
       {
-        console.log(result);
         this.userLogin = result;
       },
       error => 
       {
         console.log(error);
       }
-      )
+    )
   }
 
   getWord() :void
@@ -63,12 +68,8 @@ export class WordFindComponent implements OnInit {
       (result)  => {
         for(let i of result)
         {
-          console.log(this.roundWord[this.roundWord.length-1]);
           if(Number(i.id) === Number(this.roundWord[this.roundWord.length-1]))
           {
-            console.log('id: ' + i.id + ' and ' + this.roundWord + ' are equal -> ' + i.word); 
-            console.log(i.word.split(''));
-            console.log(this.wordToGuess);
             let wordSplitted = i.word.split('');
             for(let word of wordSplitted)
             {
@@ -89,7 +90,6 @@ export class WordFindComponent implements OnInit {
   {
       this.minValue;
       this.maxValue;
-      console.log(Math.floor(Math.random() * (this.maxValue - this.minValue +1 )));
       this.wordId = Math.floor(Math.random() * (this.maxValue) - this.minValue +1 ) + this.minValue;
       if(this.roundWord.includes(this.wordId) === true)
       {
@@ -99,16 +99,14 @@ export class WordFindComponent implements OnInit {
       {
         this.roundWord.push(this.wordId);
       }
-      console.log(this.roundWord);
       return this.roundWord;
     }
     
     checkWord(): void
     {
       this.wordSevice.getLetterToCheck().subscribe(
-        (letter: string) => {
-          console.log(letter);
-          console.log();
+        (letter: string) => 
+        {
           if(letter !== '')
           {
             if(this.lettersPush.length === 0)
@@ -119,66 +117,59 @@ export class WordFindComponent implements OnInit {
               }
 
             }
-              this.letterToCheck = letter;
+            this.letterToCheck = letter;
+            
+            console.log(this.letterToCheck);
+            if(this.lettersPush.includes(letter) === true)
+            {
+              this.findMultipleLetters = this.lettersPush.filter((x) => x.includes(letter));
               
-              console.log(this.lettersPush);
-              if(this.lettersPush.includes(letter) === true)
+              for(let x of this.findMultipleLetters)
               {
-                this.findMultipleLetters = this.lettersPush.filter((x) => x.includes(letter));
-                
-                console.log(this.findMultipleLetters)
-                for(let x of this.findMultipleLetters)
-                {
-                  console.log('x: ' + x)
-                  this.correctLetters.push(x);
-                }
-                console.log(this.correctLetters);
-                for(let d of this.wordToGuess)
-                {
-                  if(d.letter === letter)
-                  {
-                    d.show = true;
-                  }
-                }
+                this.correctLetters.push(x);
+              }
 
-                if(this.correctLetters.length === this.wordToGuess.length)
+              for(let d of this.wordToGuess)
+              {
+                if(d.letter === letter)
                 {
-                  console.log('new round');
-                  this.score = this.score + Number(this.correctLetters.length) - Number(this.errorCheck.length);
-                  console.log(this.score + ' ' + this.correctLetters.length);
-                  this.roundNumber = this.roundNumber+1;
-                  this.wordToGuess = [];
-                  this.errorCheck = [];
-                  this.correctLetters = [];
-                  
-                  if(this.roundNumber < 5)
-                  {
-                    this.getWord();
-                    this.getLogin();
-                    console.log(this.roundNumber);
-                  }
-                  else if (this.roundNumber > 5)
-                  {
-                    console.log(this.roundNumber);
-                    const dialogRefFinish = this.dialog.open(DialogFinishGameComponent,
-                      {
-                        width: '400px',
-                        height: '400px',
-                        hasBackdrop: true,
-                        panelClass: 'dialog'
-                      });
-                      
-                      dialogRefFinish.afterClosed().subscribe(result => 
-                      {
-                        window.location.reload();
-                        this.getLogin();
-                      });
+                  d.show = true;
+                }
+              }
+
+              if(this.correctLetters.length === this.wordToGuess.length)
+              {
+                this.score = this.score + Number(this.correctLetters.length) - Number(this.errorCheck.length);
+                this.roundNumber = this.roundNumber+1;
+                this.wordToGuess = [];
+                this.errorCheck = [];
+                this.correctLetters = [];
+                this.lettersPush = [];
+                this.wordSevice.sendErrorValues(this.errorCheck);
+                this.wordSevice.sendInfoNewRound(1);
+                this.getWord();
+                this.getLogin();
+
+                if (this.roundNumber > 5)
+                {
+                  const dialogRefFinish = this.dialog.open(DialogFinishGameComponent,
+                    {
+                      width: '400px',
+                      height: '420px',
+                      hasBackdrop: true,
+                      panelClass: 'dialog'
+                    });
+                    
+                    dialogRefFinish.afterClosed().subscribe(result => 
+                    {
+                      this.router.navigate(['']);
+                      this.getLogin();
+                    });
                   }
                 }
               }
               else
               {
-                console.log(this.letterToCheck);
                 this.show = false;
                 this.errorCheck.push(1);
                 console.log(this.errorCheck);
@@ -190,28 +181,29 @@ export class WordFindComponent implements OnInit {
                     width: '400px',
                     height: '400px',
                     hasBackdrop: true,
+                    data: { score: this.score, login: this.userLogin },
                     panelClass: 'dialog'
                   });
     
                   dialogRef.afterClosed().subscribe(result => 
                   {
-                      window.location.reload();
-                      this.getLogin();
+                    this.wordToGuess = [];
+                    this.errorCheck = [];
+                    this.correctLetters = [];
+                    this.lettersPush = [];
+                    this.letterToCheck = '';
+                    console.log('runagain');
+                    this.wordSevice.sendErrorValues(this.errorCheck);
+                    this.router.navigate(['']);
                   });
                 }
               }
-              // else if(this.correctLetters.length === this.wordToGuess.length)
-              // {
-              //   console.log('new round');
-              //   this.roundNumber = this.roundNumber+1;
-              // }
-            }
-            else 
-            {
-              this.errorCheck = [];
-              console.log('send errors');
-              this.wordSevice.sendErrorValues(this.errorCheck);
-            }
+          }
+          else 
+          {
+            this.errorCheck = [];
+            this.wordSevice.sendErrorValues(this.errorCheck);
+          }
         },
         error => 
         {
@@ -219,14 +211,4 @@ export class WordFindComponent implements OnInit {
         }
       );
     }
-
-//  getWord(id: number): string
-//  {
-//    let w = this.words.find(t => t===id);
-//    return w;
-//  }
-  // openDialog(templateRef: TemplateRef<any>)
-  // {
-  //   const dialogRefAdd = this.dialog.open(this.callAPIDialog);
-  // }
 }

@@ -7,10 +7,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class WordService {
   public letterToCheck = new BehaviorSubject<string>('');
   public errorsArray = new BehaviorSubject<number[]>([1]);
+  public newRound = new BehaviorSubject<number>(0);
+
   constructor() { }
 
   //send letter to check from keyboard component
-  sendLeterToCheck(letter: string): void
+  sendLetterToCheck(letter: string): void
   {
     this.letterToCheck.next(letter);
   }
@@ -31,5 +33,15 @@ export class WordService {
   public getErrors(): Observable<number[]>
   {
     return this.errorsArray.asObservable();
+  }
+
+  sendInfoNewRound(newRound: number): void
+  {
+    this.newRound.next(newRound);
+  } 
+
+  public getInfoNewRound(): Observable<number>
+  {
+    return this.newRound.asObservable();
   }
 }

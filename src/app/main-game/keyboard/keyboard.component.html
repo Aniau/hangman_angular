@@ -1,5 +1,7 @@
 <div id="keyboard" >
-    <button id="keyboard-button" mat-raised-button color="accent" *ngFor="let i of keyboard" value="{{i}}" 
-    [ngClass]="isClicked === true ? 'isClicked' : ''" 
-     (click)="onKeyUp(i)">{{ i }}</button>
+    <button class="keyboard-button" mat-raised-button *ngFor="let i of keyboard" value="{{i.letter}}" 
+    [disabled]="i.show"
+    [ngClass]="i.show ? 'isClicked' : 'keyboard-button'" 
+        (click)="onKeyUp(i.letter)"
+    >{{ i.letter }}</button>
 </div>

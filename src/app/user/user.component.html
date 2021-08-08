@@ -1,6 +1,7 @@
 <div id="login">
     <mat-form-field id="player-login">
-        <input matInput placeholder="Player nick" (change)="checkIfLogin(playerLogin)" [disabled]="disableButton" [(ngModel)]="playerLogin" autocomplete="false">
+        <input matInput placeholder="Player nick" (keyup.enter)="sendLogin(playerLogin)" (change)="checkIfLogin(playerLogin)" 
+        [(ngModel)]="playerLogin" autocomplete="false">
     </mat-form-field>
-    <button id="login-button" mat-raised-button (click)="sendLogin(playerLogin)">PLAY</button>
+    <button id="login-button" type="sumbit" [ngClass]="disableButton ? 'disabled' : 'not-disabled'" [disabled]="disableButton" mat-raised-button (click)="sendLogin(playerLogin)">PLAY</button>
 </div>

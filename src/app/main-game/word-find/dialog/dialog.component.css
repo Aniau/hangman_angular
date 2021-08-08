@@ -30,12 +30,6 @@ svg
     text-shadow: 3px 3px rgb(207, 189, 86);
 }
 
-.play
-{
-    margin-top: 15%;
-    color: white;
-}
-
 #flex
 {
     display: flex;
@@ -65,14 +59,14 @@ svg #left-left-eye, svg #right-left-eye
 
 svg #right-right-eye, svg #left-right-eye
 {
-    animation: hangman 3s ease alternate infinite;
+    animation: hangman 1s ease alternate infinite;
     animation-delay: 0.3s;
 }
 
 
 svg #reverse-smile
 {
-    animation: hangman 3s ease alternate infinite;
+    animation: hangman 1s ease alternate infinite;
     animation-delay: 0.3s;
 }
 
@@ -80,19 +74,19 @@ svg #reverse-smile
 {
     0%
     {
-        opacity: 1;
+        opacity: 0.5;
     }
     10%
     {
-        opacity: 0;
+        opacity: 1;
     }
     30%
     {
-        opacity: 1;
+        opacity: 0.5;
     }
     35%
     {
-        opacity: 10.5;
+        opacity: 0.8;
     }
     40%
     {

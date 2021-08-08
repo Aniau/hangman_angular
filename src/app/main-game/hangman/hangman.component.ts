@@ -19,25 +19,21 @@ export class HangmanComponent implements OnInit {
   ngOnInit() {
     this.wordSevice.getErrors().subscribe(
       (result: number[]) => {
-        console.log(result);
         switch(result.length)
         {
           case 1:
           {
-            console.log('hide: 1' );
             this.hangShowHead = true;
             break;
           }
           case 2:
           {
-            console.log('hide: 2' );
             this.hangShowHead = true;
             this.hangShowBody = true;
             break;
           }
           case 3:
           {
-            console.log('hide: 3' );
             this.hangShowHead = true;
             this.hangShowBody = true;
             this.hangShowHandLeft = true;
@@ -45,7 +41,6 @@ export class HangmanComponent implements OnInit {
           }
           case 4:
           {
-            console.log('hide: 4' );
             this.hangShowHead = true;
             this.hangShowBody = true;
             this.hangShowHandLeft = true;
@@ -54,7 +49,6 @@ export class HangmanComponent implements OnInit {
           }
           case 5:
           {
-            console.log('hide: 5' );
             this.hangShowHead = true;
             this.hangShowBody = true;
             this.hangShowHandLeft = true;
@@ -64,7 +58,6 @@ export class HangmanComponent implements OnInit {
           }
           case 6:
           {
-            console.log('hide: 6' );
             this.hangShowHead = true;
             this.hangShowBody = true;
             this.hangShowHandLeft = true;
@@ -89,6 +82,5 @@ export class HangmanComponent implements OnInit {
       }
       );
   }
-  // [ngClass]="{hangShowBody ? 'show' : hide}"
 }
 
