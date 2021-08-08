@@ -1,0 +1,33 @@
+#login
+{
+    display: flex;
+    width: 30%;
+    flex-direction: column;
+    margin: 30% auto auto auto;
+}
+
+#login-button
+{
+    width: 20%;
+    margin: auto;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+}
+
+#player-login
+{
+    width: 80%;
+    color: white;
+    margin: auto;
+}
+
+::ng-deep .ng-tns-c38-0 .ng-star-inserted
+{
+    color: white;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline
+{
+    background-color: white;
+}

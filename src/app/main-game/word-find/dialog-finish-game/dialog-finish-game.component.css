@@ -1,0 +1,51 @@
+#trophy-img
+{
+    width: 150px;
+    height: 150px;
+    margin: 15% auto auto auto;
+}
+
+::ng-deep .mat-dialog-container
+{
+    background-color: #262E38;
+}
+
+#dialog
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.center
+{
+    margin: 2% auto auto auto;
+    font-weight: bold;
+}
+
+#game-over
+{
+    font-family: 'Press Start 2P', cursive;
+    font-size: 220%;
+    color: rgb(207, 190, 92);
+    text-shadow: 3px 3px rgb(207, 189, 86);
+}
+
+.play
+{
+    margin-top: 10%;
+    color: white;
+}
+
+#flex
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 5%; 
+}
+#button
+{
+    background-color: #262E38;
+    color: white;
+    border: 1px solid #596574;
+}

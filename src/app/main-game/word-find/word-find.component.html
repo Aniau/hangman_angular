@@ -3,7 +3,7 @@
 <div id="score">Score: {{ score }}</div>
 <div id="word-to-guess">
     <div class="check-letter" *ngFor="let letter of wordToGuess" >
-        <div class="letter" [ngClass]="show ? 'showLetter' : 'hideLetter'">{{ letter }}</div>
-        <div class="bottom-border"></div>
+        <div class="letter" [ngClass]="letter.show ? 'showLetter' : 'hideLetter'">{{ letter.letter }}</div>
+        <div class="bottom-border"  [ngClass]="!letter.show ? 'showLetter' : 'hideLetter'"></div>
     </div>
 </div>

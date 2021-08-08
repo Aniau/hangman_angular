@@ -14,6 +14,7 @@ import { UserComponent } from './user/user.component';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MainGameComponent } from './main-game/main-game.component';
+import { DialogFinishGameComponent } from './main-game/word-find/dialog-finish-game/dialog-finish-game.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MainGameComponent } from './main-game/main-game.component';
     WordFindComponent,
     DialogComponent,
     UserComponent,
-    MainGameComponent
+    MainGameComponent,
+    DialogFinishGameComponent
   ],
   imports: [
     BrowserModule,

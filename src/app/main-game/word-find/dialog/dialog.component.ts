@@ -11,6 +11,7 @@ export class DialogComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
   closeTab()
   {
     window.close();

@@ -1,5 +1,6 @@
-<mat-form-field class="player-login">
-    <input matInput placeholder="Player nick" [(ngModel)]="playerLogin" autocomplete="false">
-</mat-form-field>
-<button mat-raised-button (click)="sendLogin(playerLogin)">PLAY</button>
-<!-- <router-outlet></router-outlet> -->
+<div id="login">
+    <mat-form-field id="player-login">
+        <input matInput placeholder="Player nick" (change)="checkIfLogin(playerLogin)" [disabled]="disableButton" [(ngModel)]="playerLogin" autocomplete="false">
+    </mat-form-field>
+    <button id="login-button" mat-raised-button (click)="sendLogin(playerLogin)">PLAY</button>
+</div>

@@ -1,0 +1,10 @@
+<div id="dialog">
+    <p class="center" id="game-over">YOU WIN !</p>
+    <img src="assets/trophy.svg" id="trophy-img" alt="Kiwi standing on oval">
+    <p class="center play">Play again ?</p>
+    <div id="flex">
+        <button id="no" mat-raised-button mat-button>NO</button>
+        <button id="button" mat-raised-button mat-button cdkFocusInitial [mat-dialog-close]="true" >YES</button>
+    </div>
+</div>
+

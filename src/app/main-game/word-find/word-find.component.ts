@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiConnectService } from '../../service/api-connect.service';
 import { words } from '../../model/answer';
+import { LetterShow } from '../../model/letterShow';
 import { MatDialog } from '@angular/material/dialog';
 import { WordService } from '../../service/word.service';
 import { DialogComponent } from '../word-find/dialog/dialog.component';
 import { GetUserLoginService } from '../../service/get-user-login.service';
+import { DialogFinishGameComponent } from './dialog-finish-game/dialog-finish-game.component';
 
 @Component({
   selector: 'app-word-find',
@@ -17,10 +19,11 @@ export class WordFindComponent implements OnInit {
   public wordId = 0;
   private roundWord: Array<number> = [];
   public wordsResult: words[] = [];
-  public wordToGuess: Array<string> = [];
+  public wordToGuess: LetterShow[] = [];
   public letterToCheck: string = '';
   public errorCheck: Array<number> = [];
-  public correctLetters: string[][] = [[],[]];
+  public correctLetters: Array<string> = [];
+  public lettersPush: Array<string> = [];
   public findMultipleLetters: Array<string> = []; 
   public roundNumber: number = 1;
   public show = false;
@@ -35,6 +38,11 @@ export class WordFindComponent implements OnInit {
   ngOnInit() {
     this.getWord();
     this.checkWord();
+    this.getLogin();
+  }
+  
+  getLogin(): void
+  {
     this.getUserLogin.getUserLogin().subscribe(
       result => 
       {
@@ -45,21 +53,29 @@ export class WordFindComponent implements OnInit {
       {
         console.log(error);
       }
-    )
+      )
   }
-  
-  getWord(): void
+
+  getWord() :void
   {
     this.roundWord = this.getRandom();
     this.apiService.getWords().subscribe(
-      result => {
+      (result)  => {
         for(let i of result)
         {
-          if(Number(i.id) === Number(this.roundWord))
+          console.log(this.roundWord[this.roundWord.length-1]);
+          if(Number(i.id) === Number(this.roundWord[this.roundWord.length-1]))
           {
             console.log('id: ' + i.id + ' and ' + this.roundWord + ' are equal -> ' + i.word); 
             console.log(i.word.split(''));
-            this.wordToGuess = i.word.split('');
+            console.log(this.wordToGuess);
+            let wordSplitted = i.word.split('');
+            for(let word of wordSplitted)
+            {
+              let words = new LetterShow(word, false);
+              this.wordToGuess.push(words);
+              console.log(this.wordToGuess);
+            }
           }
         }
       },
@@ -85,81 +101,124 @@ export class WordFindComponent implements OnInit {
       }
       console.log(this.roundWord);
       return this.roundWord;
-  }
-
-  checkWord(): void
-  {
-    this.wordSevice.getLetterToCheck().subscribe(
-      (letter: string) => {
-          console.log(typeof letter);
+    }
+    
+    checkWord(): void
+    {
+      this.wordSevice.getLetterToCheck().subscribe(
+        (letter: string) => {
+          console.log(letter);
           console.log();
           if(letter !== '')
           {
-            this.letterToCheck = letter;
-            if(this.wordToGuess.includes(letter) === true)
+            if(this.lettersPush.length === 0)
             {
-              console.log('yes');
-              this.findMultipleLetters = this.wordToGuess.filter(x => x.includes(letter));
-  
-              for(let x of this.findMultipleLetters)
+              for(let y of this.wordToGuess)
               {
-                this.correctLetters.push([x]);
+                this.lettersPush.push(y.letter);
               }
-              console.log(this.correctLetters);
-              this.show = true;
-  
-              if(this.correctLetters.length === this.wordToGuess.length)
-              {
-                console.log('new round');
-                this.wordToGuess = [];
-                this.errorCheck = [];
-                this.correctLetters = [];
-                this.getWord();
-                this.checkWord();
-                this.roundNumber = this.roundNumber+1;
-              }
+
             }
-            else if(this.letterToCheck !== 'undefined')
+              this.letterToCheck = letter;
+              
+              console.log(this.lettersPush);
+              if(this.lettersPush.includes(letter) === true)
+              {
+                this.findMultipleLetters = this.lettersPush.filter((x) => x.includes(letter));
+                
+                console.log(this.findMultipleLetters)
+                for(let x of this.findMultipleLetters)
+                {
+                  console.log('x: ' + x)
+                  this.correctLetters.push(x);
+                }
+                console.log(this.correctLetters);
+                for(let d of this.wordToGuess)
+                {
+                  if(d.letter === letter)
+                  {
+                    d.show = true;
+                  }
+                }
+
+                if(this.correctLetters.length === this.wordToGuess.length)
+                {
+                  console.log('new round');
+                  this.score = this.score + Number(this.correctLetters.length) - Number(this.errorCheck.length);
+                  console.log(this.score + ' ' + this.correctLetters.length);
+                  this.roundNumber = this.roundNumber+1;
+                  this.wordToGuess = [];
+                  this.errorCheck = [];
+                  this.correctLetters = [];
+                  
+                  if(this.roundNumber < 5)
+                  {
+                    this.getWord();
+                    this.getLogin();
+                    console.log(this.roundNumber);
+                  }
+                  else if (this.roundNumber > 5)
+                  {
+                    console.log(this.roundNumber);
+                    const dialogRefFinish = this.dialog.open(DialogFinishGameComponent,
+                      {
+                        width: '400px',
+                        height: '400px',
+                        hasBackdrop: true,
+                        panelClass: 'dialog'
+                      });
+                      
+                      dialogRefFinish.afterClosed().subscribe(result => 
+                      {
+                        window.location.reload();
+                        this.getLogin();
+                      });
+                  }
+                }
+              }
+              else
+              {
+                console.log(this.letterToCheck);
+                this.show = false;
+                this.errorCheck.push(1);
+                console.log(this.errorCheck);
+                this.wordSevice.sendErrorValues(this.errorCheck);
+                if(this.errorCheck.length === 6 && this.correctLetters.length !== this.wordToGuess.length)
+                {
+                  const dialogRef = this.dialog.open(DialogComponent,
+                  {
+                    width: '400px',
+                    height: '400px',
+                    hasBackdrop: true,
+                    panelClass: 'dialog'
+                  });
+    
+                  dialogRef.afterClosed().subscribe(result => 
+                  {
+                      window.location.reload();
+                      this.getLogin();
+                  });
+                }
+              }
+              // else if(this.correctLetters.length === this.wordToGuess.length)
+              // {
+              //   console.log('new round');
+              //   this.roundNumber = this.roundNumber+1;
+              // }
+            }
+            else 
             {
-              console.log('false');
-              this.show = false;
-              this.errorCheck.push(1);
-              console.log(this.errorCheck);
+              this.errorCheck = [];
+              console.log('send errors');
               this.wordSevice.sendErrorValues(this.errorCheck);
-              if(this.errorCheck.length === 6 && this.correctLetters.length !== this.wordToGuess.length)
-              {
-                const dialogRef = this.dialog.open(DialogComponent,
-                {
-                  width: '400px',
-                  height: '400px',
-                  hasBackdrop: true,
-                  panelClass: 'dialog'
-                });
-  
-                dialogRef.afterClosed().subscribe(result => 
-                {
-                    window.location.reload();
-                });
-              }
             }
-            else if(this.correctLetters.length === this.wordToGuess.length)
-            {
-              console.log('new round');
-              this.roundNumber = this.roundNumber+1;
-            }
-          }
-          else
-          {
-            this.errorCheck = [];
-            this.wordSevice.sendErrorValues(this.errorCheck);
-          }
-      },
-      error => 
-      {
-        console.log(error);
-      }
-    );
-  }
+        },
+        error => 
+        {
+          console.log(error);
+        }
+      );
+    }
 
 //  getWord(id: number): string
 //  {

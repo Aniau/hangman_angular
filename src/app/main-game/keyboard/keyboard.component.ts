@@ -21,6 +21,7 @@ export class KeyboardComponent implements OnInit {
     this.wordSevice.getErrors().subscribe(
       (result: number[]) => {
         console.log(result);
+        console.log(result);
       },
       error => {
         console.log(error);
