@@ -7,20 +7,28 @@
     flex-wrap: wrap;
     justify-content: stretch;
     align-content: center;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 #flex-item-hangman
 {
     flex-grow: 0;
     flex-shrink: 0;
-    flex-basis: 40%;
+    flex-basis: 50%;
     align-items: center; 
 }
 #flex-item-word
 {
     flex-grow: 0;
     flex-shrink: 0;
-    flex-basis: 60%;
+    flex-basis: 50%;
     align-items: center; 
+}
+
+#flex-item-keyboard
+{
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 100%;
+    align-items: stretch; 
 }
