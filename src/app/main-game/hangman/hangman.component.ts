@@ -18,8 +18,8 @@ export class HangmanComponent implements OnInit {
 
   ngOnInit() {
     this.wordSevice.getErrors().subscribe(
-      (result: number[]) => {
-        switch(result.length)
+      (failed: number[]) => {
+        switch(failed.length)
         {
           case 1:
           {

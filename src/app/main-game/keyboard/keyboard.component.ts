@@ -50,24 +50,8 @@ export class KeyboardComponent implements OnInit {
       if(key.letter === letter)
       {
         key.show = true;
-        this.audioCorrect.play();
-      }
-      else
-      {
-        this.audioFail.play();
       }
     }    
     this.wordSevice.sendLetterToCheck(letter);
   }
-
-  playCorrect()
-  {
-    this.audioCorrect.play();
-  }
-
-  playFailed()
-  {
-    this.audioFail.play();
-  }
-
 }

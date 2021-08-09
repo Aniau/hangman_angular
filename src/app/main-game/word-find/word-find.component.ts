@@ -27,7 +27,7 @@ export class WordFindComponent implements OnInit {
   public wordsResult: words[] = [];
   public wordToGuess: LetterShow[] = [];
   public letterToCheck: string = '';
-  public errorCheck: Array<number> = [];
+  public errorList: Array<number> = [];
   public correctLetters: Array<string> = [];
   public lettersPush: Array<string> = [];
   public findMultipleLetters: Array<string> = []; 
@@ -36,10 +36,12 @@ export class WordFindComponent implements OnInit {
   public userLogin: string = '';
   public score: number = 0;
 
-  constructor(private apiService: ApiConnectService, private wordSevice: WordService, private getUserLogin: GetUserLoginService, public dialog: MatDialog,
+  constructor(private apiService: ApiConnectService, 
+              private wordSevice: WordService, 
+              private getUserLogin: GetUserLoginService, 
+              public dialog: MatDialog,
               private router: Router) 
-  { 
-  }
+  { }
   
   ngOnInit() {
     this.getWord();
@@ -50,9 +52,9 @@ export class WordFindComponent implements OnInit {
   getLogin(): void
   {
     this.getUserLogin.getUserLogin().subscribe(
-      result => 
+      login => 
       {
-        this.userLogin = result;
+        this.userLogin = login;
       },
       error => 
       {
@@ -65,8 +67,8 @@ export class WordFindComponent implements OnInit {
   {
     this.roundWord = this.getRandom();
     this.apiService.getWords().subscribe(
-      (result)  => {
-        for(let i of result)
+      (wordsList)  => {
+        for(let i of wordsList)
         {
           if(Number(i.id) === Number(this.roundWord[this.roundWord.length-1]))
           {
@@ -75,7 +77,6 @@ export class WordFindComponent implements OnInit {
             {
               let words = new LetterShow(word, false);
               this.wordToGuess.push(words);
-              console.log(this.wordToGuess);
             }
           }
         }
@@ -119,33 +120,32 @@ export class WordFindComponent implements OnInit {
             }
             this.letterToCheck = letter;
             
-            console.log(this.letterToCheck);
             if(this.lettersPush.includes(letter) === true)
             {
               this.findMultipleLetters = this.lettersPush.filter((x) => x.includes(letter));
               
-              for(let x of this.findMultipleLetters)
+              for(let filterLetter of this.findMultipleLetters)
               {
-                this.correctLetters.push(x);
+                this.correctLetters.push(filterLetter);
               }
 
-              for(let d of this.wordToGuess)
+              for(let oneLetter of this.wordToGuess)
               {
-                if(d.letter === letter)
+                if(oneLetter.letter === letter)
                 {
-                  d.show = true;
+                  oneLetter.show = true;
                 }
               }
 
               if(this.correctLetters.length === this.wordToGuess.length)
               {
-                this.score = this.score + Number(this.correctLetters.length) - Number(this.errorCheck.length);
+                this.score = this.score + Number(this.correctLetters.length) - Number(this.errorList.length);
                 this.roundNumber = this.roundNumber+1;
                 this.wordToGuess = [];
-                this.errorCheck = [];
+                this.errorList = [];
                 this.correctLetters = [];
                 this.lettersPush = [];
-                this.wordSevice.sendErrorValues(this.errorCheck);
+                this.wordSevice.sendErrorValues(this.errorList);
                 this.wordSevice.sendInfoNewRound(1);
                 this.getWord();
                 this.getLogin();
@@ -171,10 +171,10 @@ export class WordFindComponent implements OnInit {
               else
               {
                 this.show = false;
-                this.errorCheck.push(1);
-                console.log(this.errorCheck);
-                this.wordSevice.sendErrorValues(this.errorCheck);
-                if(this.errorCheck.length === 6 && this.correctLetters.length !== this.wordToGuess.length)
+                this.errorList.push(1);
+                this.wordSevice.sendErrorValues(this.errorList);
+
+                if(this.errorList.length === 6 && this.correctLetters.length !== this.wordToGuess.length)
                 {
                   const dialogRef = this.dialog.open(DialogComponent,
                   {
@@ -188,12 +188,11 @@ export class WordFindComponent implements OnInit {
                   dialogRef.afterClosed().subscribe(result => 
                   {
                     this.wordToGuess = [];
-                    this.errorCheck = [];
+                    this.errorList = [];
                     this.correctLetters = [];
                     this.lettersPush = [];
                     this.letterToCheck = '';
-                    console.log('runagain');
-                    this.wordSevice.sendErrorValues(this.errorCheck);
+                    this.wordSevice.sendErrorValues(this.errorList);
                     this.router.navigate(['']);
                   });
                 }
@@ -201,8 +200,8 @@ export class WordFindComponent implements OnInit {
           }
           else 
           {
-            this.errorCheck = [];
-            this.wordSevice.sendErrorValues(this.errorCheck);
+            this.errorList = [];
+            this.wordSevice.sendErrorValues(this.errorList);
           }
         },
         error => 

@@ -19,7 +19,6 @@
 
 #word-to-guess
 {
-    /* margin: 50% auto auto auto; */
     display: flex;
     flex-direction: row;
     padding-top: 20%;
