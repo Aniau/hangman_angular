@@ -1,8 +1,25 @@
+#flex-timer
+{
+    display: flex; 
+    flex-direction: row; 
+    justify-content: stretch;
+}
+
 #round-number
 {
     margin: 2% auto auto 5%;
     font-size: 400%;
     color: white;
+    width: 50%;
+    display: inline-block;
+}
+
+#timer
+{
+    margin-top: 2%;
+    color: white;
+    width: 50%;
+    font-size: 300%;
 }
 
 #user-login
@@ -63,3 +80,4 @@
 {
     background-color: cadetblue;
 }
+

@@ -35,6 +35,11 @@ export class WordFindComponent implements OnInit {
   public show = false;
   public userLogin: string = '';
   public score: number = 0;
+  public interval: any;
+  public timerSeconds = 0;
+  public timerMinutes = 0;
+  public timerHours = 0;
+  public timer = '00:00:00';
 
   constructor(private apiService: ApiConnectService, 
               private wordSevice: WordService, 
@@ -47,6 +52,7 @@ export class WordFindComponent implements OnInit {
     this.getWord();
     this.checkWord();
     this.getLogin();
+    this.runTimer();
   }
   
   getLogin(): void
@@ -209,5 +215,32 @@ export class WordFindComponent implements OnInit {
           console.log(error);
         }
       );
+    }
+
+    runTimer()
+    {
+      this.interval = setInterval(() => 
+      {
+        if(this.timerSeconds < 60)
+        {
+          this.timerSeconds++
+          this.timer = (this.timerHours < 10 ? '0' + this.timerHours : this.timerHours) + ':' + (this.timerMinutes < 10 ? '0' + this.timerMinutes : this.timerMinutes) + ':' + (this.timerSeconds < 10 ? '0'+this.timerSeconds : this.timerSeconds);
+          // console.log(this.timerSeconds);
+        }
+        else if(this.timerSeconds % 60 === 0)
+        {
+          this.timerSeconds = -1;
+          // console.log(this.timerMinutes);
+          this.timerSeconds++;
+          this.timerMinutes = this.timerMinutes + 1;
+          console.log(this.timerMinutes % 60);
+          if(this.timerMinutes % 60 === 0)
+          {
+            this.timerMinutes = 0;
+            this.timerHours = this.timerHours + 1;
+          }
+          this.timer =(this.timerHours < 10 ? '0' + this.timerHours : this.timerHours) + ':' + (this.timerMinutes < 10 ? '0' + this.timerMinutes : this.timerMinutes) + ':' + (this.timerSeconds < 10 ? '0'+this.timerSeconds : this.timerSeconds);
+        }
+      }, 1000); 
     }
 }
