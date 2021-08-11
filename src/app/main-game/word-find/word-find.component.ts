@@ -22,24 +22,25 @@ export interface DialogData {
 export class WordFindComponent implements OnInit {
   private minValue: number = 1;
   private maxValue: number = 30;
-  public wordId = 0;
+  private wordId = 0;
   private roundWord: Array<number> = [];
   public wordsResult: words[] = [];
   public wordToGuess: LetterShow[] = [];
-  public letterToCheck: string = '';
+  private letterToCheck: string = '';
   public errorList: Array<number> = [];
-  public correctLetters: Array<string> = [];
-  public lettersPush: Array<string> = [];
-  public findMultipleLetters: Array<string> = []; 
+  private correctLetters: Array<string> = [];
+  private lettersPush: Array<string> = [];
+  private findMultipleLetters: Array<string> = []; 
   public roundNumber: number = 1;
   public show = false;
   public userLogin: string = '';
   public score: number = 0;
-  public interval: any;
-  public timerSeconds = 0;
-  public timerMinutes = 0;
-  public timerHours = 0;
+  private interval: any;
+  private timerSeconds = 0;
+  private timerMinutes = 0;
+  private timerHours = 0;
   public timer = '00:00:00';
+  private pauseTimer = false;
 
   constructor(private apiService: ApiConnectService, 
               private wordSevice: WordService, 
@@ -84,6 +85,7 @@ export class WordFindComponent implements OnInit {
               let words = new LetterShow(word, false);
               this.wordToGuess.push(words);
             }
+            console.log(this.wordToGuess);
           }
         }
       },
@@ -158,11 +160,14 @@ export class WordFindComponent implements OnInit {
 
                 if (this.roundNumber > 5)
                 {
+                  this.pauseTimer = true;
+                  this.runTimer();
                   const dialogRefFinish = this.dialog.open(DialogFinishGameComponent,
                     {
                       width: '400px',
                       height: '420px',
                       hasBackdrop: true,
+                      data: { score: this.score, login: this.userLogin, time: this.timer },
                       panelClass: 'dialog'
                     });
                     
@@ -187,7 +192,6 @@ export class WordFindComponent implements OnInit {
                     width: '400px',
                     height: '400px',
                     hasBackdrop: true,
-                    data: { score: this.score, login: this.userLogin },
                     panelClass: 'dialog'
                   });
     
@@ -221,25 +225,30 @@ export class WordFindComponent implements OnInit {
     {
       this.interval = setInterval(() => 
       {
-        if(this.timerSeconds < 60)
+        if(this.pauseTimer === true)
         {
-          this.timerSeconds++
           this.timer = (this.timerHours < 10 ? '0' + this.timerHours : this.timerHours) + ':' + (this.timerMinutes < 10 ? '0' + this.timerMinutes : this.timerMinutes) + ':' + (this.timerSeconds < 10 ? '0'+this.timerSeconds : this.timerSeconds);
-          // console.log(this.timerSeconds);
+          console.log(this.timer);
         }
-        else if(this.timerSeconds % 60 === 0)
+        else
         {
-          this.timerSeconds = -1;
-          // console.log(this.timerMinutes);
-          this.timerSeconds++;
-          this.timerMinutes = this.timerMinutes + 1;
-          console.log(this.timerMinutes % 60);
-          if(this.timerMinutes % 60 === 0)
+          if(this.timerSeconds < 60)
           {
-            this.timerMinutes = 0;
-            this.timerHours = this.timerHours + 1;
+            this.timerSeconds++
+            this.timer = (this.timerHours < 10 ? '0' + this.timerHours : this.timerHours) + ':' + (this.timerMinutes < 10 ? '0' + this.timerMinutes : this.timerMinutes) + ':' + (this.timerSeconds < 10 ? '0'+this.timerSeconds : this.timerSeconds);
           }
-          this.timer =(this.timerHours < 10 ? '0' + this.timerHours : this.timerHours) + ':' + (this.timerMinutes < 10 ? '0' + this.timerMinutes : this.timerMinutes) + ':' + (this.timerSeconds < 10 ? '0'+this.timerSeconds : this.timerSeconds);
+          else if(this.timerSeconds % 60 === 0)
+          {
+            this.timerSeconds = -1;
+            this.timerSeconds++;
+            this.timerMinutes = this.timerMinutes + 1;
+            if(this.timerMinutes % 60 === 0)
+            {
+              this.timerMinutes = 0;
+              this.timerHours = this.timerHours + 1;
+            }
+            this.timer = (this.timerHours < 10 ? '0' + this.timerHours : this.timerHours) + ':' + (this.timerMinutes < 10 ? '0' + this.timerMinutes : this.timerMinutes) + ':' + (this.timerSeconds < 10 ? '0'+this.timerSeconds : this.timerSeconds);
+          }
         }
       }, 1000); 
     }
