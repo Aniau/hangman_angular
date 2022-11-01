@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,17 +7,12 @@ import { Router } from '@angular/router';
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.css']
 })
-export class DialogComponent implements OnInit {
-  public looseGameAudio = new Audio('http://www.maths.mic.ul.ie/posullivan/boooo.wav');
+export class DialogComponent {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,  public dialog: MatDialog) { }
 
-  ngOnInit(): void {
-    this.looseGameAudio.play();
-  }
-  
-  runNewGame()
-  {
+  runNewGame() {
     this.router.navigate(['']);
+    this.dialog.closeAll();
   }
 }

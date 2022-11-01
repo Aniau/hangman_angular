@@ -1,7 +1,7 @@
 <div id="keyboard" >
-    <button class="keyboard-button" mat-raised-button *ngFor="let i of keyboard" value="{{i.letter}}" 
-    [disabled]="i.show"
-    [ngClass]="i.show ? 'isClicked' : 'keyboard-button'" 
-        (click)="onKeyUp(i.letter)"
-    >{{ i.letter }}</button>
+    <button class="keyboard-button" mat-raised-button *ngFor="let key of keyboard" value="{{key.letter}}" 
+    [disabled]="key.show"
+    [ngClass]="key.show ? 'isClicked' : 'keyboard-button'" 
+        (click)="onKeyUp(key.letter)"
+    >{{ key.letter }}</button>
 </div>

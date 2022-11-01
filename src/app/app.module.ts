@@ -15,6 +15,10 @@ import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MainGameComponent } from './main-game/main-game.component';
 import { DialogFinishGameComponent } from './main-game/word-find/dialog-finish-game/dialog-finish-game.component';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { HangmanReducer } from './store/reducers';
 
 @NgModule({
   declarations: [
@@ -28,6 +32,10 @@ import { DialogFinishGameComponent } from './main-game/word-find/dialog-finish-g
     DialogFinishGameComponent
   ],
   imports: [
+    StoreModule.forRoot({
+      hangman: HangmanReducer
+    }),
+    EffectsModule.forRoot([]),
     BrowserModule,
     MatButtonModule,
     BrowserAnimationsModule,
@@ -36,7 +44,8 @@ import { DialogFinishGameComponent } from './main-game/word-find/dialog-finish-g
     MatDialogModule,
     MatInputModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreDevtoolsModule.instrument()
   ],
   providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
   bootstrap: [AppComponent]

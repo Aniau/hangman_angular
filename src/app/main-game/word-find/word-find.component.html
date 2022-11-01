@@ -1,9 +1,9 @@
 <div id="flex-timer">
-    <div id="round-number">ROUND {{ roundNumber }}</div>
+    <div id="round-number">ROUND {{ roundNumber$ | async }}</div>
     <div id="timer"> {{ timer }}</div>
 </div>
-<div id="user-login">Player: <strong>{{ userLogin }}</strong></div>
-<div id="score">Score: <strong>{{ score }}</strong></div>
+<div id="user-login">Player: <strong>{{ user$ | async }}</strong></div>
+<div id="score">Score: <strong>{{ score$ | async }}</strong></div>
 <div id="word-to-guess">
     <div class="check-letter" *ngFor="let letter of wordToGuess" >
         <div class="letter" [ngClass]="letter.show ? 'showLetter' : 'hideLetter'">{{ letter.letter }}</div>

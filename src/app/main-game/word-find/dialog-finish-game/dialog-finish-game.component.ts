@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,17 +7,11 @@ import { Router } from '@angular/router';
   templateUrl: './dialog-finish-game.component.html',
   styleUrls: ['./dialog-finish-game.component.css']
 })
-export class DialogFinishGameComponent implements OnInit {
-  public winGameAudio = new Audio('https://www.pacdv.com/sounds/applause-sound/app-7.mp3');
+export class DialogFinishGameComponent {
+  constructor(private router: Router, public dialog: MatDialog) { }
 
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
-    this.winGameAudio.play();
-  }
-
-  runNewGame()
-  {
+  runNewGame() {
     this.router.navigate(['']);
+    this.dialog.closeAll();
   }
 }

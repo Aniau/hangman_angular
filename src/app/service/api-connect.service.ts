@@ -10,13 +10,11 @@ import { catchError, tap } from 'rxjs/operators';
 export class ApiConnectService {
 
   constructor(private http: HttpClient) { }
-  getWords(): Observable<words[]>
-  {
+  getWords(): Observable<words[]> {
     return this.http.get<words[]>('assets/answers.json').pipe(catchError(this.handleError));
   }
 
-  private handleError(error: HttpErrorResponse): Observable<never>
-  {
+  private handleError(error: HttpErrorResponse): Observable<never>  {
     return throwError(`Błąd załadowania listy aptek! Statusem błędu: ${error.status}`);
   }
 }
